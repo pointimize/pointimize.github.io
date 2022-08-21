@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<head>
+  <!-- General -->
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Hotel Perks Finder | pointimize.com</title>
+
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./hotelPanel.css">
+  <link rel="stylesheet" href="./infoModal.css">
+  <link rel="stylesheet" href="./optionPanel.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <link rel="shortcut icon" href="./resources/pointimize_favicon.png" type="image/png" />
+
+  <!-- Social Network -->
+  <meta property="og:image" content="https://pointimize.github.io/hotel-perks-finder/resources/cover.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pointimize.github.io/hotel-perks-finder/" />
+  <meta property="og:description" content="" />
+  <meta property="og:site_name" content="Hotel Perks Finder | pointimize.com" />
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XN6JWD6VPJ"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XN6JWD6VPJ');
+  </script>
+
+  <!-- Leaflet Library -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+  <!-- Autocomplete library  -->
+  <link rel="stylesheet" href="./awesomplete.css" />
+  <script src="./awesomplete.js" async></script>
+
+  <!-- Button Favicon -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+  <div class="title">
+    <div class="header">
+      <img src="./resources/pointimize_favicon.png" onclick="home_map()">
+      <a class="logo" onclick="home_map()"><strong>point</strong>imize | <strong>Hotel Perks</strong> <i>finder</i></a>
+    </div>
+  </div>
+
+  <datalist id="mylist"></datalist>
+  <datalist id="hotellist"></datalist>
+
+  <div class="form">
+    <form>
+      <input type="text" id="input_ori" placeholder="Search for cities and hotels"
+        onclick="clearInputOri()" class="awesomplete" list="mylist"/>
+      <button class="option_button" type="button" onclick="open_option_modal()"><i class="fa fa-gear"></i></button>
+      <!-- <button class="option_button close_button" id="close_button" type="button" onclick="close_info_modal()"><i class="fa fa-close"></i></button> -->
+    </form>
+    <!-- <div class="filter_button">
+      <button class="option_button" type="button" onclick="open_option_modal()"><i class="fa fa-gear"></i></button>
+    </div> -->
+  </div>
+
+  <!-- Hotel Info Modal and Option Modal -->
+  <div id="info_modal_overlay" class="overlay" onclick="close_info_modal()"></div>
+  <div id="hotel_info_modal" class="info_modal"></div>
+
+  <div id="option_modal" class="option_modal">
+    <button class="close_button" id="close_option_button" type="button" onclick="close_option_modal()"><i class="fa fa-close"></i></button>
+    <div class="fst-filter"><h1>FILTERS</h1></div>
+    <div class="fst-filter flexbox-wrap">
+      <div class="wrap flexbox">
+        <h4>Hotel Collections</h4>
+        <div class="wrapper">
+          <input type="checkbox" id="EP00VL" name="elite_fliter" value="EP00VL" disabled>
+          <label for="EP00VL">VISA Luxury Hotel Collection</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="EP00VS" name="elite_fliter" value="EP00VS" disabled>
+          <label for="EP00VS">VISA Signature Luxury Hotel Collection</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="EP00HC" name="elite_fliter" value="EP00HC" disabled>
+          <label for="EP00HC">AMEX Hotel Collection</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="EP00FH" name="elite_fliter" value="EP00FH" disabled>
+          <label for="EP00FH">AMEX Fine Hotels+Resorts</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="EP00KC" name="elite_fliter" value="EP00KC" disabled>
+          <label for="EP00KC">KIWI COLLECTION</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="EP00TP" name="elite_fliter" value="EP00TP" disabled>
+          <label for="EP00TP">Tablet Hotels</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="EP00VT" name="elite_fliter" value="EP00VT" disabled>
+          <label for="EP00VT">VIRTUOSO</label><br>
+        </div>
+      </div>
+      <div class="wrap flexbox">
+        <h4>Perk Types</h4>
+        <div class="wrapper">
+          <input type="checkbox" id="CBF" name="perk_filter" value="CBF" disabled>
+          <label for="CBF">Breakfast</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="CRU" name="perk_filter" value="CRU" disabled>
+          <label for="CRU">Room Upgrades</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="ECI" name="perk_filter" value="ECI" disabled>
+          <label for="ECI">Early Check-in</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="LCO" name="perk_filter" value="LCO" disabled>
+          <label for="LCO">Late Check-out</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="FCD" name="perk_filter" value="FCD" disabled>
+          <label for="FCD">Free Credit</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="IRG" name="perk_filter" value="IRG" disabled>
+          <label for="IRG">In-room Gift</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="WGA" name="perk_filter" value="WGA" disabled>
+          <label for="WGA">Welcome Gift</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="CIN" name="perk_filter" value="CIN" disabled>
+          <label for="CIN">Internet</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="OTH" name="perk_filter" value="OTH" disabled>
+          <label for="OTH">Others</label><br>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="fst-filter">
+      <div class="wrap flexbox">
+        <h4>Perk Types</h4>
+        <div class="wrapper">
+          <input type="checkbox" id="CBF" name="perk_filter" value="CBF" disabled>
+          <label for="CBF">Breakfast</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="CRU" name="perk_filter" value="CRU" disabled>
+          <label for="CRU">Room Upgrades</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="ECI" name="perk_filter" value="ECI" disabled>
+          <label for="ECI">Early Check-in</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="LCO" name="perk_filter" value="LCO" disabled>
+          <label for="LCO">Late Check-out</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="FCD" name="perk_filter" value="FCD" disabled>
+          <label for="FCD">Free Credit</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="IRG" name="perk_filter" value="IRG" disabled>
+          <label for="IRG">In-room Gift</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="WGA" name="perk_filter" value="WGA" disabled>
+          <label for="WGA">Welcome Gift</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="CIN" name="perk_filter" value="CIN" disabled>
+          <label for="CIN">Internet</label><br>
+        </div>
+        <div class="wrapper">
+          <input type="checkbox" id="OTH" name="perk_filter" value="OTH" disabled>
+          <label for="OTH">Others</label><br>
+        </div>
+      </div>
+    </div> -->
+    <div class="fst-filter button-wrap">
+      <button class="apply-button" onclick="get_ep_filter()">Apply</button>
+    </div>
+  </div>
+
+  <div class="wrap_hotel_map">
+    <!-- Hotel Side Panel -->
+    <div id="hotelPanel" class="hotelPanel">
+      <!-- <div class="fst-filter">
+          <div class="wrap">
+            <div class="property_image">
+              <img src="https://cdn.kiwicollection.com/media/property/PR003217/xl/003217-01-exterior-pool-night.jpg?cb=1265733594">
+            </div>
+            <div class="property_text">
+              <div class="property_title">
+                <h3>W Hotel Taipei</h3>
+              </div>
+              <div class="property_desc">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus aliquid eius quia expedita illo sequi optio labore assumenda.
+              </div>
+              <div class="wrapper">
+                <div class="property_elites">
+                  <h4>Hotel Collection</h4>
+                  <li>Visa</li>
+                  <li>Kiwi</li>
+                </div>
+                <div class="property_perks">
+                  <h4>Perks</h4>
+                  <li>Early Check-In</li>
+                  <li>Late Check-Out</li>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    <!-- Map Frame -->
+    <div id="mapid" class="mapid"></div>
+  </div>
+
+  <!-- <div id="footer"></div> -->
+</body>
+
+<!-- functions -->
+<!-- <script src="./resources/visalx_cat.js"></script>
+<script src="./resources/visalx_hotels.js"></script>
+<script src="./resources/visalx_perks.js"></script> -->
+<script src="./resources/search_key.js"></script>
+<script src="./resources/matched_hotels.js"></script>
+<script src="./resources/all_elite_perks.js"></script>
+<script src="./resources/perks_collection_desc.js"></script>
+<script src="./functions_filter.js"></script>
+<script src="./functions.js"></script>
+<script src="./main.js"></script>
