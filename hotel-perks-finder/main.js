@@ -54,7 +54,6 @@ document.getElementById('input_ori').addEventListener('awesomplete-selectcomplet
 window.onload = function(){
     document.getElementById('input_ori').value = 'New York';
     inputOrigin();
-    alert($( window ).height());
     if ( $( window ).width() < 1024 ) {
       alert("Your screen resolution is below minimum required 1024 (width).\nSome items may not fit on the screen.");
     }
