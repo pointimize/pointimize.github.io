@@ -1,5 +1,6 @@
 window.onload = loadAwesomeplete();
 
+
 var loadCoord = [35.8, -85.4];
 var map = L.map('mapid', {
   worldCopyJump: true,
@@ -50,7 +51,11 @@ document.getElementById('input_ori').addEventListener('awesomplete-selectcomplet
 // document.getElementById('input_hotel').addEventListener('awesomplete-selectcomplete',function(){
 //   inputHotel();
 // });
-window.onload=function(){
+window.onload = function(){
     document.getElementById('input_ori').value = 'New York';
     inputOrigin();
+    alert($( window ).height());
+    if ( $( window ).width() < 1024 ) {
+      alert("Your screen resolution is below minimum required 1024 (width).\nSome items may not fit on the screen.");
+    }
 }
