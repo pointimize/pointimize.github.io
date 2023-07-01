@@ -46,10 +46,35 @@
 </head>
 
 <body>
+  <!-- Notice Modal -->
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Thank you</h2>
+      <p>Dear Visitors,</p>
+      <p>Thank you for being interested in the materials on our site, and we regret to inform you that as the operation of our web service was temporarily discontinued in 2018, it is currently in an explorational development stage. We are open to exploring new opportunities, partnerships, acquisitions, or any other business proposals that align with our expertise.</p>
+      <p>If you have a potential collaboration in mind or would like to discuss a business opportunity, we would be delighted to hear from you. Please reach out to us at</p>
+      <p><a href='mailto:pointimize.legacy@gmail.com'>pointimize.legacy@gmail.com</a></p>
+      <p>with your inquiries, ideas, or proposals.</p>
+      <p>We value your interest and will respond to you promptly. We appreciate your understanding and look forward to exploring potential future endeavors together.</p>
+      <p></p>
+      <p>Best regards,</p>
+      <p>Pointimize Legacy</p>
+    </div>
+  </div>
+
   <div class="title">
     <div class="header">
-      <img src="./resources/pointimize_favicon.png" onclick="home_map()">
-      <a class="logo" onclick="home_map()"><strong>point</strong>imize | <strong>Hotel Perks</strong> <i>finder</i></a>
+      <div style="display:flex;flex-direction:row;margin-left:30px">
+        <img src="./resources/pointimize_favicon.png" onclick="home_map()">
+        <a class="logo" onclick="home_map()" id="logoDesktop"><strong>point</strong>imize | <strong>Hotel Perks</strong> <i>finder</i></a>
+        <a class="logo" onclick="home_map()" id="logoMobile"><strong>point</strong>imize</a>
+      </div>
+      <div class="menu">
+        <ul>
+          <li onclick="document.getElementById('modal').style.display = 'block'"><a>Contact</a></li>
+        </ul>
+      </div>
     </div>
   </div>
 
@@ -71,7 +96,6 @@
   <!-- Hotel Info Modal and Option Modal -->
   <div id="info_modal_overlay" class="overlay" onclick="close_info_modal()"></div>
   <div id="hotel_info_modal" class="info_modal"></div>
-
   <div id="option_modal" class="option_modal">
     <button class="close_button" id="close_option_button" type="button" onclick="close_option_modal()"><i class="fa fa-close"></i></button>
     <div class="fst-filter"><h1>FILTERS</h1></div>

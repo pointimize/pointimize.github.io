@@ -48,12 +48,16 @@ document.getElementById('input_ori').addEventListener('awesomplete-selectcomplet
   inputOrigin();
 });
 
+document.querySelector(".close").addEventListener("click", function() {
+  document.getElementById("modal").style.display = "none";
+});
 // document.getElementById('input_hotel').addEventListener('awesomplete-selectcomplete',function(){
 //   inputHotel();
 // });
 window.onload = function(){
     document.getElementById('input_ori').value = 'New York';
     inputOrigin();
+    document.getElementById("modal").style.display = "block";
     if ( $( window ).width() < 1024 ) {
       alert("Your screen resolution is below minimum required 1024 (width).\nSome items may not fit on the screen.");
     }
